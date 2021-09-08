@@ -21,8 +21,15 @@ export default function App() {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+      try {
+        const location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest });
+        setLocation(location);
+      } catch (error) {
+        console.log("getCurrentPositionAsync | error: ", error)
+        setErrorMsg('Location provider is unavailable');
+
+      }
+
     })();
   }, []);
 
